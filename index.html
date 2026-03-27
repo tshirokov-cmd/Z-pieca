@@ -46,7 +46,7 @@ nav.scrolled{background:rgba(12,11,9,.97);box-shadow:0 1px 0 var(--border)}
 
 /* ── HERO ── */
 #hero{position:relative;height:100vh;min-height:620px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background-image:url('https://raw.githubusercontent.com/tshirokov-cmd/Z-pieca/main/sala.jpg');background-size:cover;background-position:center 30%;transform:scale(1.06);transition:transform 10s ease;filter:brightness(.5) saturate(.9)}
+.hero-bg{position:absolute;inset:0;background-image:url('https://raw.githubusercontent.com/tshirokov-cmd/Z-pieca/main/sala.jpg');background-size:cover;background-position:center 30%;background-attachment:fixed;filter:brightness(.5) saturate(.9)}
 .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(12,11,9,.25) 0%,rgba(12,11,9,.45) 50%,rgba(12,11,9,.92) 100%)}
 /* wood accent bar */
 .hero-wood{position:absolute;bottom:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--wood-dark),var(--wood-light) 30%,var(--gold-d) 60%,var(--wood-dark));opacity:.7;z-index:3}
@@ -224,20 +224,47 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;back
   nav{padding:0 1.3rem}
   .nav-links,.nav-cta{display:none}
   .hamburger{display:flex}
-  section{padding:5rem 1.3rem}
+  /* hero mobile */
+  #hero{height:100svh;min-height:560px}
+  .hero-bg{background-attachment:scroll} /* fixed doesn't work well on iOS */
+  .hero-eyebrow{font-size:.6rem;letter-spacing:2.5px;margin-bottom:1.2rem}
+  .hero-title{font-size:clamp(2.4rem,10vw,3.8rem);margin-bottom:1rem}
+  .hero-sub{font-size:.8rem;letter-spacing:1.5px;margin-bottom:2rem}
+  .hero-actions{flex-direction:column;align-items:center;gap:.75rem;width:100%}
+  .hero-actions .btn{width:min(300px,85vw);justify-content:center;padding:.9rem 1.5rem}
+  /* sections */
+  section{padding:4.5rem 1.4rem}
   .about-grid,.contact-grid{grid-template-columns:1fr;gap:3rem}
   .about-visual{display:none}
-  .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:200px}
+  /* menu */
+  .menu-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;padding-bottom:0;scrollbar-width:none}
+  .menu-tabs::-webkit-scrollbar{display:none}
+  .tab-btn{padding:.7rem 1.1rem;font-size:.66rem}
+  .menu-grid{grid-template-columns:1fr;gap:0}
+  .menu-item{padding:1.1rem 1.2rem}
+  .mi-name{font-size:1rem}
+  .mi-price{font-size:1.1rem}
+  .mi-desc{font-size:.76rem}
+  /* gallery */
+  .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:180px;gap:3px}
   .g-cell.tall,.g-cell.wide{grid-row:span 1;grid-column:span 1}
+  .gallery-header{padding:5rem 1.4rem 3rem}
+  /* about features */
+  .about-features{grid-template-columns:1fr}
+  /* footer */
   .footer-grid{grid-template-columns:1fr;gap:2rem}
   .footer-bottom{flex-direction:column;text-align:center}
-  .menu-grid{grid-template-columns:1fr}
-  .about-features{grid-template-columns:1fr}
-  .menu-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
+  /* contact */
+  .map-wrap{height:320px}
 }
 @media(max-width:480px){
-  .gallery-grid{grid-template-columns:1fr}
-  .hero-title{font-size:3rem}
+  .gallery-grid{grid-template-columns:1fr;grid-auto-rows:220px}
+  .hero-title{font-size:2.5rem}
+  .hero-divider{margin-bottom:1rem}
+  .s-title{font-size:1.9rem}
+  .menu-item{padding:1rem 1rem}
+  .mi-head{gap:.6rem}
+  section{padding:4rem 1rem}
 }
 </style>
 </head>
@@ -688,10 +715,7 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.08 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-const heroBg = document.getElementById('heroBg');
-window.addEventListener('scroll', () => {
-  if (heroBg) heroBg.style.transform = `scale(1.06) translateY(${scrollY * 0.18}px)`;
-}, {passive:true});
+// hero bg-attachment:fixed handles parallax natively; no JS needed
 </script>
 </body>
 </html>
